@@ -38,6 +38,21 @@
       <artifactId>scala-library</artifactId>
       <version>${scala.version}</version>
     </dependency>
+    <dependency>
+      <groupId>io.circe</groupId>
+      <artifactId>circe-core_2.13</artifactId>
+      <version>0.14.1</version>
+    </dependency>
+    <dependency>
+      <groupId>io.circe</groupId>
+      <artifactId>circe-generic_2.13</artifactId>
+      <version>0.14.1</version>
+    </dependency>
+    <dependency>
+      <groupId>io.circe</groupId>
+      <artifactId>circe-parser_2.13</artifactId>
+      <version>0.14.1</version>
+    </dependency>
   </dependencies>
 
   <build>
