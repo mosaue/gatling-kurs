@@ -94,6 +94,33 @@
           </execution>
         </executions>
       </plugin>
+      <plugin>
+        <groupId>org.openapitools</groupId>
+        <artifactId>openapi-generator-maven-plugin</artifactId>
+        <!-- RELEASE_VERSION -->
+        <version>5.1.0</version>
+        <!-- /RELEASE_VERSION -->
+        <executions>
+          <execution>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+            <configuration>
+              <inputSpec>https://petstore.swagger.io/v2/swagger.json</inputSpec>
+              <generatorName>scalatra</generatorName>
+              <configOptions>
+                <sourceFolder>src/gen/scala/main</sourceFolder>
+              </configOptions>
+              <generateApis>false</generateApis>
+              <additionalProperties>
+                <modelPropertyNaming>original</modelPropertyNaming>
+              </additionalProperties>
+              <removeOperationIdPrefix>true</removeOperationIdPrefix>
+              <modelNamePrefix></modelNamePrefix>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
 </project>
