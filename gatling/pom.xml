@@ -18,6 +18,7 @@
   </properties>
 
   <dependencies>
+    <!--Gatling Dependencies-->
     <dependency>
       <groupId>io.gatling.highcharts</groupId>
       <artifactId>gatling-charts-highcharts</artifactId>
@@ -33,11 +34,13 @@
       <artifactId>gatling-recorder</artifactId>
       <version>${gatling.version}</version>
     </dependency>
+    <!--Scala Dependencies, mostly for IntelliJ-->
     <dependency>
       <groupId>org.scala-lang</groupId>
       <artifactId>scala-library</artifactId>
       <version>${scala.version}</version>
     </dependency>
+    <!--Json handling Dependencies-->
     <dependency>
       <groupId>io.circe</groupId>
       <artifactId>circe-core_2.13</artifactId>
@@ -56,6 +59,7 @@
   </dependencies>
 
   <build>
+    <!--Gatling maven Plugin-->
     <testSourceDirectory>src/test/scala</testSourceDirectory>
     <sourceDirectory>src/main/scala</sourceDirectory>
     <plugins>

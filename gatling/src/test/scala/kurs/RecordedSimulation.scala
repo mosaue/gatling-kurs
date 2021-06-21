@@ -1,12 +1,11 @@
 package kurs
 
-import io.circe.Json
 import io.gatling.core.Predef._
 import io.gatling.http.Predef._
-import objects.{Phone, PhoneRequest}
 import io.circe.syntax._
 import io.circe.generic.auto._
 import io.circe.parser._
+import objects.json.{Phone, PhoneRequest}
 
 class RecordedSimulation extends Simulation {
 
@@ -40,7 +39,6 @@ class RecordedSimulation extends Simulation {
     "sec-fetch-site" -> "same-site")
 
   val uri2 = "https://api.demoblaze.com"
-  val uri3 = "https://hls.demoblaze.com"
 
   val scn = scenario("RecordedSimulation")
     .exec(http("request_0")
@@ -52,17 +50,23 @@ class RecordedSimulation extends Simulation {
         .headers(headers_44)
         .body(StringBody(PhoneRequest("1").asJson.toString()))
         .check(status.is(200))
-        .check(bodyString.transform(
-          body =>
-            checkResponseBodyIsPhoneRequest(body)
-        ).is(true))
         .check(substring(""""id":1"""))
+        .check(regex(""""cat":"phone""""))
         .check(bodyString.transform(
           body =>
             checkCategory(body, "phone")
         ).is(true))
-        .check(regex(""""cat":"phone""""))
+        .check(bodyString.transform(
+          body =>
+            checkResponseBodyIsPhoneRequest(body)
+        ).is(true))
+        .check(bodyString.saveAs("response"))
     )
+    .exec {
+      session =>
+          println(s"""Respons: ${session("response").as[String]}""")
+        session
+    }
 
   def checkResponseBodyIsPhoneRequest(body: String): Boolean = {
     decode[Phone](body) match {
@@ -70,10 +74,11 @@ class RecordedSimulation extends Simulation {
       case Right(success) => return true
     }
   }
+
   def checkCategory(body: String, expectedCategory: String): Boolean = {
     decode[Phone](body) match {
       case Left(failure) => return false
-      case Right(json) => if(json.cat.equals(expectedCategory)) return true else return false
+      case Right(phone) => if (phone.cat.equals(expectedCategory)) return true else return false
     }
   }
 
