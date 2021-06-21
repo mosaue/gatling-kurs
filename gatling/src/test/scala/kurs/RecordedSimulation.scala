@@ -48,23 +48,23 @@ class RecordedSimulation extends Simulation {
       http("request_44")
         .post(uri2 + "/view")
         .headers(headers_44)
-        .body(StringBody(PhoneRequest("1").asJson.toString()))
-        .check(status.is(200))
-        .check(substring(""""id":1"""))
-        .check(regex(""""cat":"phone""""))
+        .body(StringBody(PhoneRequest("1").asJson.toString())) //4
+        .check(status.is(200)) //3
+        .check(substring(""""id":1""")) //4
+        .check(regex(""""cat":"phone"""")) //3
         .check(bodyString.transform(
           body =>
-            checkCategory(body, "phone")
+            checkCategory(body, "phone") //4
         ).is(true))
         .check(bodyString.transform(
           body =>
-            checkResponseBodyIsPhoneRequest(body)
+            checkResponseBodyIsPhoneRequest(body) //4
         ).is(true))
-        .check(bodyString.saveAs("response"))
+        .check(bodyString.saveAs("response"))// 4
     )
     .exec {
       session =>
-          println(s"""Respons: ${session("response").as[String]}""")
+          println(s"""Respons: ${session("response").as[String]}""") //4
         session
     }
 
